@@ -72,10 +72,11 @@ int steps = 0;
 
 // --- app
 Camera3D camera = {0};
-Shader shader = {0};
+Shader shader_maze = {0};
 
 Color *mapPixels = NULL;
 Texture2D texture = {0};
+Texture2D tex_noise0 = {0};
 Texture2D cubicmap = {0};
 Model model = {0};
 Sound sound = { 0 };
@@ -214,9 +215,6 @@ static void draw_inputs() {
 
 static void draw() {
   ClearBackground(BLACK);
-
-  SetShaderValue(shader, shader.locs[SHADER_LOC_VECTOR_VIEW],
-                 &camera.position.x, SHADER_UNIFORM_VEC3);
 
   BeginMode3D(camera);
     DrawModel(model, mapPosition, 1.0f, WHITE); // Draw maze map
@@ -365,7 +363,8 @@ static void inputs() {
 // --- flow
 
 static void dispose() {
-  UnloadShader(shader);
+  UnloadShader(shader_maze);
+  UnloadTexture(tex_noise0);
   UnloadTexture(pic_forwards);
   UnloadTexture(pic_rotate);
   UnloadTexture(pic_rotate_left);
@@ -394,14 +393,7 @@ static void init() {
 
 	InitAudioDevice();
 
-  shader = LoadShader(RES_PATH "lighting.vs", RES_PATH "lighting.fs");
-  // Get some required shader locations
-  shader.locs[SHADER_LOC_VECTOR_VIEW] = GetShaderLocation(shader, "viewPos");
-  int ambientLoc = GetShaderLocation(shader, "ambient");
-  SetShaderValue(shader, ambientLoc, (float[4]){0.1f, 0.1f, 0.1f, 1.0f},
-                 SHADER_UNIFORM_VEC4);
-  CreateLight(LIGHT_DIRECTIONAL, (Vector3){-2, 1, -2}, Vector3Zero(), WHITE,
-              shader);
+  shader_maze = LoadShader(RES_PATH "maze.vs", RES_PATH "maze.fs");
 
   pic_forwards = LoadTexture(RES_PATH "pic/forwards.png");
   pic_rotate = LoadTexture(RES_PATH "pic/rotate.png");
@@ -423,9 +415,18 @@ static void init() {
   model = LoadModelFromMesh(mesh);
 
   // NOTE: By default each cube is mapped to one part of texture atlas
-  texture = LoadTexture(RES_PATH "cubicmap_atlas.png"); // Load map texture
+  texture = LoadTexture(RES_PATH "atlas_maze.png"); // Load map texture
   model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture =
       texture; // Set map diffuse texture
+
+  model.materials[0].shader = shader_maze;
+
+  tex_noise0 = LoadTexture(RES_PATH "tex_noise0.png");
+  // somewhy does not work with direct SetShaderValueTexture. Assignin location to some of reserver channels
+  model.materials[0].shader.locs[SHADER_LOC_MAP_HEIGHT] = GetShaderLocation(shader_maze, "tex_noise0");
+  model.materials[0].maps[MATERIAL_MAP_HEIGHT].texture = tex_noise0;
+  //int noise_location = GetShaderLocation(model.materials[0].shader, "tex_noise0");
+  //SetShaderValueTexture(model.materials[0].shader, noise_location, tex_noise0);
 
   // Get map image data to be used for collision detection
   mapPixels = LoadImageColors(imMap);
