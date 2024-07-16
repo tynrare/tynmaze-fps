@@ -16,7 +16,7 @@ var Module = typeof Module != 'undefined' ? Module : {};
 
 // --pre-jses are emitted after the Module integration code, so that they can
 // refer to Module (if they choose; they can also define Module)
-// include: /tmp/tmp0t_47a2g.js
+// include: /tmp/tmplcyr6vku.js
 
   if (!Module.expectedDataFileDownloads) {
     Module.expectedDataFileDownloads = 0;
@@ -192,11 +192,11 @@ Module['FS_createPath']("/res", "pic", true, true);
     }
 
     }
-    loadPackage({"files": [{"filename": "/res/atlas_maze.png", "start": 0, "end": 3536}, {"filename": "/res/coin.wav", "start": 3536, "end": 35325, "audio": 1}, {"filename": "/res/lighting.fs", "start": 35325, "end": 37246}, {"filename": "/res/lighting.vs", "start": 37246, "end": 38824}, {"filename": "/res/maze-0.png", "start": 38824, "end": 46905}, {"filename": "/res/maze.fs", "start": 46905, "end": 48394}, {"filename": "/res/maze.vs", "start": 48394, "end": 50398}, {"filename": "/res/minijump.wav", "start": 50398, "end": 71588, "audio": 1}, {"filename": "/res/pic/forwards.png", "start": 71588, "end": 91579}, {"filename": "/res/pic/rotate.png", "start": 91579, "end": 120221}, {"filename": "/res/pic/rotate_left.png", "start": 120221, "end": 137590}, {"filename": "/res/pic/rotate_right.png", "start": 137590, "end": 154868}, {"filename": "/res/sound.wav", "start": 154868, "end": 202554, "audio": 1}, {"filename": "/res/tex0.png", "start": 202554, "end": 244620}, {"filename": "/res/tex1.png", "start": 244620, "end": 245575}, {"filename": "/res/tex_noise0.png", "start": 245575, "end": 783765}], "remote_package_size": 783765});
+    loadPackage({"files": [{"filename": "/res/atlas_maze.png", "start": 0, "end": 3536}, {"filename": "/res/coin.wav", "start": 3536, "end": 35325, "audio": 1}, {"filename": "/res/lighting.fs", "start": 35325, "end": 37246}, {"filename": "/res/lighting.vs", "start": 37246, "end": 38824}, {"filename": "/res/maze-0.png", "start": 38824, "end": 46564}, {"filename": "/res/maze-0.png~", "start": 46564, "end": 54645}, {"filename": "/res/maze.fs", "start": 54645, "end": 56134}, {"filename": "/res/maze.vs", "start": 56134, "end": 58138}, {"filename": "/res/minijump.wav", "start": 58138, "end": 79328, "audio": 1}, {"filename": "/res/pic/forwards.png", "start": 79328, "end": 99319}, {"filename": "/res/pic/rotate.png", "start": 99319, "end": 127961}, {"filename": "/res/pic/rotate_left.png", "start": 127961, "end": 145330}, {"filename": "/res/pic/rotate_right.png", "start": 145330, "end": 162608}, {"filename": "/res/sound.wav", "start": 162608, "end": 210294, "audio": 1}, {"filename": "/res/tex0.png", "start": 210294, "end": 252360}, {"filename": "/res/tex1.png", "start": 252360, "end": 253315}, {"filename": "/res/tex_noise0.png", "start": 253315, "end": 791505}], "remote_package_size": 791505});
 
   })();
 
-// end include: /tmp/tmp0t_47a2g.js
+// end include: /tmp/tmplcyr6vku.js
 
 
 // Sometimes an existing Module object exists with properties
