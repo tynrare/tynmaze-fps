@@ -79,7 +79,6 @@ Texture2D texture = {0};
 Texture2D tex_noise0 = {0};
 Texture2D cubicmap = {0};
 Model model = {0};
-Sound sound = { 0 };
 
 // --- res
 Texture pic_forwards = {0};
@@ -124,7 +123,6 @@ static ACTION action_b = ACTION_NONE;
 static void update() {
   if (inputDirection.x) {
     steps += 1;
-		PlaySound(sound);
   }
 
   // rotate
@@ -370,7 +368,6 @@ static void dispose() {
   UnloadTexture(pic_rotate_left);
   UnloadTexture(pic_rotate_right);
   UnloadImageColors(mapPixels); // Unload color array
-	UnloadSound(sound);
 
   UnloadTexture(cubicmap); // Unload cubicmap texture
   UnloadTexture(texture);  // Unload map texture
@@ -399,7 +396,6 @@ static void init() {
   pic_rotate = LoadTexture(RES_PATH "pic/rotate.png");
   pic_rotate_left = LoadTexture(RES_PATH "pic/rotate_left.png");
   pic_rotate_right = LoadTexture(RES_PATH "pic/rotate_right.png");
-	sound = LoadSound(RES_PATH "sound.wav");
 
   camera.position = (Vector3){0.0f, 0.6f, 0.0f}; // Camera position
   camera.target = (Vector3){0.0f, 0.5f, 1.0f};   // Camera looking at point
