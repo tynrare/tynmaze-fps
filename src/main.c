@@ -1,5 +1,7 @@
 // @tynroar
 
+
+// --- system includes
 #include "dust.h"
 #include "root.h"
 #include <math.h>
@@ -15,6 +17,9 @@
 #if defined(PLATFORM_WEB)
 #include <emscripten/emscripten.h>
 #endif
+
+// --- gameplay includes
+#include "weapon.h"
 
 bool active = false;
 
@@ -40,6 +45,11 @@ float rlerp(float a, float b, float t) {
 
   return atan2f(SN, CS);
 }
+
+Vector2 Vec2Up = { 0.0, 1.0 };
+Vector2 Vec2Right = { 1.0, 0.0 };
+
+// ---
 
 void SaveProgress(const char *key, const int value) {
 #if defined(PLATFORM_WEB)
@@ -94,7 +104,8 @@ typedef enum ACTIONS {
 	ACTION_BACKWARD,
 	ACTION_LEFT,
 	ACTION_RIGHT,
-	ACTION_RUN
+	ACTION_RUN,
+	ACTION_SWAP
 } ACTION;
 
 typedef enum {
@@ -217,6 +228,7 @@ static void draw() {
   BeginMode3D(camera);
     DrawModel(model, mapPosition, 1.0f, WHITE); // Draw maze map
   EndMode3D();
+	draw_weapon();
 
   DrawText(TextFormat("Steps: %i", steps), 16 + 2, 16 + 2, 20, BLACK);
   DrawText(TextFormat("Steps: %i", steps), 16, 16, 20, WHITE);
@@ -345,6 +357,10 @@ static void inputs() {
     inputDirection.y = -1.0f;
   }
 
+	if (IsKeyPressed(KEY_R)) {
+		swap_weapon();
+	}
+
 	if (sui_btn_c_down) {
 		action_b = ACTION_RUN;
 	}
@@ -387,6 +403,8 @@ static void init() {
 		playerPosition.y = playerPosition.y ? playerPosition.y : 1;
 		playerTurn = LoadProgress("turn") / 1e4;
 	}
+
+	init_weapon();
 
 	InitAudioDevice();
 
