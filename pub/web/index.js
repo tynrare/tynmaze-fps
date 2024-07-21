@@ -16,7 +16,7 @@ var Module = typeof Module != 'undefined' ? Module : {};
 
 // --pre-jses are emitted after the Module integration code, so that they can
 // refer to Module (if they choose; they can also define Module)
-// include: /tmp/tmp3woaj1sk.js
+// include: /tmp/tmp0e6cvi4c.js
 
   if (!Module.expectedDataFileDownloads) {
     Module.expectedDataFileDownloads = 0;
@@ -124,6 +124,7 @@ var REMOTE_PACKAGE_SIZE = metadata['remote_package_size'];
         if (!check) throw msg + new Error().stack;
       }
 Module['FS_createPath']("/", "res", true, true);
+Module['FS_createPath']("/res", "models", true, true);
 Module['FS_createPath']("/res", "pic", true, true);
 
       /** @constructor */
@@ -192,11 +193,11 @@ Module['FS_createPath']("/res", "pic", true, true);
     }
 
     }
-    loadPackage({"files": [{"filename": "/res/atlas_maze.png", "start": 0, "end": 3536}, {"filename": "/res/coin.wav", "start": 3536, "end": 35325, "audio": 1}, {"filename": "/res/lighting.fs", "start": 35325, "end": 37246}, {"filename": "/res/lighting.vs", "start": 37246, "end": 38824}, {"filename": "/res/maze-0.png", "start": 38824, "end": 46564}, {"filename": "/res/maze-0.png~", "start": 46564, "end": 54645}, {"filename": "/res/maze.fs", "start": 54645, "end": 56134}, {"filename": "/res/maze.vs", "start": 56134, "end": 58138}, {"filename": "/res/minijump.wav", "start": 58138, "end": 79328, "audio": 1}, {"filename": "/res/pic/forwards.png", "start": 79328, "end": 99319}, {"filename": "/res/pic/rotate.png", "start": 99319, "end": 127961}, {"filename": "/res/pic/rotate_left.png", "start": 127961, "end": 145330}, {"filename": "/res/pic/rotate_right.png", "start": 145330, "end": 162608}, {"filename": "/res/sound.wav", "start": 162608, "end": 210294, "audio": 1}, {"filename": "/res/tex0.png", "start": 210294, "end": 252360}, {"filename": "/res/tex1.png", "start": 252360, "end": 253315}, {"filename": "/res/tex_noise0.png", "start": 253315, "end": 791505}], "remote_package_size": 791505});
+    loadPackage({"files": [{"filename": "/res/atlas_maze.png", "start": 0, "end": 3536}, {"filename": "/res/coin.wav", "start": 3536, "end": 35325, "audio": 1}, {"filename": "/res/lighting.fs", "start": 35325, "end": 37246}, {"filename": "/res/lighting.vs", "start": 37246, "end": 38824}, {"filename": "/res/maze-0.png", "start": 38824, "end": 46564}, {"filename": "/res/maze-0.png~", "start": 46564, "end": 54645}, {"filename": "/res/maze.fs", "start": 54645, "end": 56134}, {"filename": "/res/maze.vs", "start": 56134, "end": 58138}, {"filename": "/res/minijump.wav", "start": 58138, "end": 79328, "audio": 1}, {"filename": "/res/models/gun.glb", "start": 79328, "end": 110844}, {"filename": "/res/models/sword.glb", "start": 110844, "end": 123512}, {"filename": "/res/pic/forwards.png", "start": 123512, "end": 143503}, {"filename": "/res/pic/rotate.png", "start": 143503, "end": 172145}, {"filename": "/res/pic/rotate_left.png", "start": 172145, "end": 189514}, {"filename": "/res/pic/rotate_right.png", "start": 189514, "end": 206792}, {"filename": "/res/sound.wav", "start": 206792, "end": 254478, "audio": 1}, {"filename": "/res/tex0.png", "start": 254478, "end": 296544}, {"filename": "/res/tex1.png", "start": 296544, "end": 297499}, {"filename": "/res/tex_noise0.png", "start": 297499, "end": 835689}], "remote_package_size": 835689});
 
   })();
 
-// end include: /tmp/tmp3woaj1sk.js
+// end include: /tmp/tmp0e6cvi4c.js
 
 
 // Sometimes an existing Module object exists with properties
@@ -834,50 +835,50 @@ var tempI64;
 // === Body ===
 
 var ASM_CONSTS = {
-  34896: () => { if (document.fullscreenElement) return 1; },  
- 34942: () => { return document.getElementById('canvas').width; },  
- 34994: () => { return parseInt(document.getElementById('canvas').style.width); },  
- 35062: () => { document.exitFullscreen(); },  
- 35089: () => { setTimeout(function() { Module.requestFullscreen(false, false); }, 100); },  
- 35162: () => { if (document.fullscreenElement) return 1; },  
- 35208: () => { return document.getElementById('canvas').width; },  
- 35260: () => { return screen.width; },  
- 35285: () => { document.exitFullscreen(); },  
- 35312: () => { setTimeout(function() { Module.requestFullscreen(false, true); setTimeout(function() { canvas.style.width="unset"; }, 100); }, 100); },  
- 35445: () => { if (document.fullscreenElement) return 1; },  
- 35491: () => { return document.getElementById('canvas').width; },  
- 35543: () => { return parseInt(document.getElementById('canvas').style.width); },  
- 35611: () => { if (document.fullscreenElement) return 1; },  
- 35657: () => { return document.getElementById('canvas').width; },  
- 35709: () => { return screen.width; },  
- 35734: () => { if (document.fullscreenElement) return 1; },  
- 35780: () => { return document.getElementById('canvas').width; },  
- 35832: () => { return screen.width; },  
- 35857: () => { document.exitFullscreen(); },  
- 35884: () => { if (document.fullscreenElement) return 1; },  
- 35930: () => { return document.getElementById('canvas').width; },  
- 35982: () => { return parseInt(document.getElementById('canvas').style.width); },  
- 36050: () => { document.exitFullscreen(); },  
- 36077: () => { return screen.width; },  
- 36102: () => { return screen.height; },  
- 36128: () => { return window.screenX; },  
- 36155: () => { return window.screenY; },  
- 36182: ($0) => { navigator.clipboard.writeText(UTF8ToString($0)); },  
- 36235: ($0) => { document.getElementById("canvas").style.cursor = UTF8ToString($0); },  
- 36306: () => { document.getElementById('canvas').style.cursor = 'none'; },  
- 36363: ($0) => { document.getElementById('canvas').style.cursor = UTF8ToString($0); },  
- 36434: () => { if (document.fullscreenElement) return 1; },  
- 36480: () => { if (document.pointerLockElement) return 1; },  
- 36527: ($0, $1, $2, $3, $4) => { if (typeof window === 'undefined' || (window.AudioContext || window.webkitAudioContext) === undefined) { return 0; } if (typeof(window.miniaudio) === 'undefined') { window.miniaudio = { referenceCount: 0 }; window.miniaudio.device_type = {}; window.miniaudio.device_type.playback = $0; window.miniaudio.device_type.capture = $1; window.miniaudio.device_type.duplex = $2; window.miniaudio.device_state = {}; window.miniaudio.device_state.stopped = $3; window.miniaudio.device_state.started = $4; miniaudio.devices = []; miniaudio.track_device = function(device) { for (var iDevice = 0; iDevice < miniaudio.devices.length; ++iDevice) { if (miniaudio.devices[iDevice] == null) { miniaudio.devices[iDevice] = device; return iDevice; } } miniaudio.devices.push(device); return miniaudio.devices.length - 1; }; miniaudio.untrack_device_by_index = function(deviceIndex) { miniaudio.devices[deviceIndex] = null; while (miniaudio.devices.length > 0) { if (miniaudio.devices[miniaudio.devices.length-1] == null) { miniaudio.devices.pop(); } else { break; } } }; miniaudio.untrack_device = function(device) { for (var iDevice = 0; iDevice < miniaudio.devices.length; ++iDevice) { if (miniaudio.devices[iDevice] == device) { return miniaudio.untrack_device_by_index(iDevice); } } }; miniaudio.get_device_by_index = function(deviceIndex) { return miniaudio.devices[deviceIndex]; }; miniaudio.unlock_event_types = (function(){ return ['touchend', 'click']; })(); miniaudio.unlock = function() { for(var i = 0; i < miniaudio.devices.length; ++i) { var device = miniaudio.devices[i]; if (device != null && device.webaudio != null && device.state === window.miniaudio.device_state.started) { device.webaudio.resume().then(() => { Module._ma_device__on_notification_unlocked(device.pDevice); }, (error) => {console.error("Failed to resume audiocontext", error); }); } } miniaudio.unlock_event_types.map(function(event_type) { document.removeEventListener(event_type, miniaudio.unlock, true); }); }; miniaudio.unlock_event_types.map(function(event_type) { document.addEventListener(event_type, miniaudio.unlock, true); }); } window.miniaudio.referenceCount += 1; return 1; },  
- 38685: () => { if (typeof(window.miniaudio) !== 'undefined') { window.miniaudio.referenceCount -= 1; if (window.miniaudio.referenceCount === 0) { delete window.miniaudio; } } },  
- 38849: () => { return (navigator.mediaDevices !== undefined && navigator.mediaDevices.getUserMedia !== undefined); },  
- 38953: () => { try { var temp = new (window.AudioContext || window.webkitAudioContext)(); var sampleRate = temp.sampleRate; temp.close(); return sampleRate; } catch(e) { return 0; } },  
- 39124: ($0, $1, $2, $3, $4, $5) => { var deviceType = $0; var channels = $1; var sampleRate = $2; var bufferSize = $3; var pIntermediaryBuffer = $4; var pDevice = $5; if (typeof(window.miniaudio) === 'undefined') { return -1; } var device = {}; var audioContextOptions = {}; if (deviceType == window.miniaudio.device_type.playback && sampleRate != 0) { audioContextOptions.sampleRate = sampleRate; } device.webaudio = new (window.AudioContext || window.webkitAudioContext)(audioContextOptions); device.webaudio.suspend(); device.state = window.miniaudio.device_state.stopped; var channelCountIn = 0; var channelCountOut = channels; if (deviceType != window.miniaudio.device_type.playback) { channelCountIn = channels; } device.scriptNode = device.webaudio.createScriptProcessor(bufferSize, channelCountIn, channelCountOut); device.scriptNode.onaudioprocess = function(e) { if (device.intermediaryBufferView == null || device.intermediaryBufferView.length == 0) { device.intermediaryBufferView = new Float32Array(Module.HEAPF32.buffer, pIntermediaryBuffer, bufferSize * channels); } if (deviceType == miniaudio.device_type.capture || deviceType == miniaudio.device_type.duplex) { for (var iChannel = 0; iChannel < channels; iChannel += 1) { var inputBuffer = e.inputBuffer.getChannelData(iChannel); var intermediaryBuffer = device.intermediaryBufferView; for (var iFrame = 0; iFrame < bufferSize; iFrame += 1) { intermediaryBuffer[iFrame*channels + iChannel] = inputBuffer[iFrame]; } } _ma_device_process_pcm_frames_capture__webaudio(pDevice, bufferSize, pIntermediaryBuffer); } if (deviceType == miniaudio.device_type.playback || deviceType == miniaudio.device_type.duplex) { _ma_device_process_pcm_frames_playback__webaudio(pDevice, bufferSize, pIntermediaryBuffer); for (var iChannel = 0; iChannel < e.outputBuffer.numberOfChannels; ++iChannel) { var outputBuffer = e.outputBuffer.getChannelData(iChannel); var intermediaryBuffer = device.intermediaryBufferView; for (var iFrame = 0; iFrame < bufferSize; iFrame += 1) { outputBuffer[iFrame] = intermediaryBuffer[iFrame*channels + iChannel]; } } } else { for (var iChannel = 0; iChannel < e.outputBuffer.numberOfChannels; ++iChannel) { e.outputBuffer.getChannelData(iChannel).fill(0.0); } } }; if (deviceType == miniaudio.device_type.capture || deviceType == miniaudio.device_type.duplex) { navigator.mediaDevices.getUserMedia({audio:true, video:false}) .then(function(stream) { device.streamNode = device.webaudio.createMediaStreamSource(stream); device.streamNode.connect(device.scriptNode); device.scriptNode.connect(device.webaudio.destination); }) .catch(function(error) { console.log("Failed to get user media: " + error); }); } if (deviceType == miniaudio.device_type.playback) { device.scriptNode.connect(device.webaudio.destination); } device.pDevice = pDevice; return miniaudio.track_device(device); },  
- 41952: ($0) => { return miniaudio.get_device_by_index($0).webaudio.sampleRate; },  
- 42018: ($0) => { var device = miniaudio.get_device_by_index($0); if (device.scriptNode !== undefined) { device.scriptNode.onaudioprocess = function(e) {}; device.scriptNode.disconnect(); device.scriptNode = undefined; } if (device.streamNode !== undefined) { device.streamNode.disconnect(); device.streamNode = undefined; } device.webaudio.close(); device.webaudio = undefined; device.pDevice = undefined; },  
- 42411: ($0) => { miniaudio.untrack_device_by_index($0); },  
- 42454: ($0) => { var device = miniaudio.get_device_by_index($0); device.webaudio.resume(); device.state = miniaudio.device_state.started; },  
- 42579: ($0) => { var device = miniaudio.get_device_by_index($0); device.webaudio.suspend(); device.state = miniaudio.device_state.stopped; }
+  43888: () => { if (document.fullscreenElement) return 1; },  
+ 43934: () => { return document.getElementById('canvas').width; },  
+ 43986: () => { return parseInt(document.getElementById('canvas').style.width); },  
+ 44054: () => { document.exitFullscreen(); },  
+ 44081: () => { setTimeout(function() { Module.requestFullscreen(false, false); }, 100); },  
+ 44154: () => { if (document.fullscreenElement) return 1; },  
+ 44200: () => { return document.getElementById('canvas').width; },  
+ 44252: () => { return screen.width; },  
+ 44277: () => { document.exitFullscreen(); },  
+ 44304: () => { setTimeout(function() { Module.requestFullscreen(false, true); setTimeout(function() { canvas.style.width="unset"; }, 100); }, 100); },  
+ 44437: () => { if (document.fullscreenElement) return 1; },  
+ 44483: () => { return document.getElementById('canvas').width; },  
+ 44535: () => { return parseInt(document.getElementById('canvas').style.width); },  
+ 44603: () => { if (document.fullscreenElement) return 1; },  
+ 44649: () => { return document.getElementById('canvas').width; },  
+ 44701: () => { return screen.width; },  
+ 44726: () => { if (document.fullscreenElement) return 1; },  
+ 44772: () => { return document.getElementById('canvas').width; },  
+ 44824: () => { return screen.width; },  
+ 44849: () => { document.exitFullscreen(); },  
+ 44876: () => { if (document.fullscreenElement) return 1; },  
+ 44922: () => { return document.getElementById('canvas').width; },  
+ 44974: () => { return parseInt(document.getElementById('canvas').style.width); },  
+ 45042: () => { document.exitFullscreen(); },  
+ 45069: () => { return screen.width; },  
+ 45094: () => { return screen.height; },  
+ 45120: () => { return window.screenX; },  
+ 45147: () => { return window.screenY; },  
+ 45174: ($0) => { navigator.clipboard.writeText(UTF8ToString($0)); },  
+ 45227: ($0) => { document.getElementById("canvas").style.cursor = UTF8ToString($0); },  
+ 45298: () => { document.getElementById('canvas').style.cursor = 'none'; },  
+ 45355: ($0) => { document.getElementById('canvas').style.cursor = UTF8ToString($0); },  
+ 45426: () => { if (document.fullscreenElement) return 1; },  
+ 45472: () => { if (document.pointerLockElement) return 1; },  
+ 45519: ($0, $1, $2, $3, $4) => { if (typeof window === 'undefined' || (window.AudioContext || window.webkitAudioContext) === undefined) { return 0; } if (typeof(window.miniaudio) === 'undefined') { window.miniaudio = { referenceCount: 0 }; window.miniaudio.device_type = {}; window.miniaudio.device_type.playback = $0; window.miniaudio.device_type.capture = $1; window.miniaudio.device_type.duplex = $2; window.miniaudio.device_state = {}; window.miniaudio.device_state.stopped = $3; window.miniaudio.device_state.started = $4; miniaudio.devices = []; miniaudio.track_device = function(device) { for (var iDevice = 0; iDevice < miniaudio.devices.length; ++iDevice) { if (miniaudio.devices[iDevice] == null) { miniaudio.devices[iDevice] = device; return iDevice; } } miniaudio.devices.push(device); return miniaudio.devices.length - 1; }; miniaudio.untrack_device_by_index = function(deviceIndex) { miniaudio.devices[deviceIndex] = null; while (miniaudio.devices.length > 0) { if (miniaudio.devices[miniaudio.devices.length-1] == null) { miniaudio.devices.pop(); } else { break; } } }; miniaudio.untrack_device = function(device) { for (var iDevice = 0; iDevice < miniaudio.devices.length; ++iDevice) { if (miniaudio.devices[iDevice] == device) { return miniaudio.untrack_device_by_index(iDevice); } } }; miniaudio.get_device_by_index = function(deviceIndex) { return miniaudio.devices[deviceIndex]; }; miniaudio.unlock_event_types = (function(){ return ['touchend', 'click']; })(); miniaudio.unlock = function() { for(var i = 0; i < miniaudio.devices.length; ++i) { var device = miniaudio.devices[i]; if (device != null && device.webaudio != null && device.state === window.miniaudio.device_state.started) { device.webaudio.resume().then(() => { Module._ma_device__on_notification_unlocked(device.pDevice); }, (error) => {console.error("Failed to resume audiocontext", error); }); } } miniaudio.unlock_event_types.map(function(event_type) { document.removeEventListener(event_type, miniaudio.unlock, true); }); }; miniaudio.unlock_event_types.map(function(event_type) { document.addEventListener(event_type, miniaudio.unlock, true); }); } window.miniaudio.referenceCount += 1; return 1; },  
+ 47677: () => { if (typeof(window.miniaudio) !== 'undefined') { window.miniaudio.referenceCount -= 1; if (window.miniaudio.referenceCount === 0) { delete window.miniaudio; } } },  
+ 47841: () => { return (navigator.mediaDevices !== undefined && navigator.mediaDevices.getUserMedia !== undefined); },  
+ 47945: () => { try { var temp = new (window.AudioContext || window.webkitAudioContext)(); var sampleRate = temp.sampleRate; temp.close(); return sampleRate; } catch(e) { return 0; } },  
+ 48116: ($0, $1, $2, $3, $4, $5) => { var deviceType = $0; var channels = $1; var sampleRate = $2; var bufferSize = $3; var pIntermediaryBuffer = $4; var pDevice = $5; if (typeof(window.miniaudio) === 'undefined') { return -1; } var device = {}; var audioContextOptions = {}; if (deviceType == window.miniaudio.device_type.playback && sampleRate != 0) { audioContextOptions.sampleRate = sampleRate; } device.webaudio = new (window.AudioContext || window.webkitAudioContext)(audioContextOptions); device.webaudio.suspend(); device.state = window.miniaudio.device_state.stopped; var channelCountIn = 0; var channelCountOut = channels; if (deviceType != window.miniaudio.device_type.playback) { channelCountIn = channels; } device.scriptNode = device.webaudio.createScriptProcessor(bufferSize, channelCountIn, channelCountOut); device.scriptNode.onaudioprocess = function(e) { if (device.intermediaryBufferView == null || device.intermediaryBufferView.length == 0) { device.intermediaryBufferView = new Float32Array(Module.HEAPF32.buffer, pIntermediaryBuffer, bufferSize * channels); } if (deviceType == miniaudio.device_type.capture || deviceType == miniaudio.device_type.duplex) { for (var iChannel = 0; iChannel < channels; iChannel += 1) { var inputBuffer = e.inputBuffer.getChannelData(iChannel); var intermediaryBuffer = device.intermediaryBufferView; for (var iFrame = 0; iFrame < bufferSize; iFrame += 1) { intermediaryBuffer[iFrame*channels + iChannel] = inputBuffer[iFrame]; } } _ma_device_process_pcm_frames_capture__webaudio(pDevice, bufferSize, pIntermediaryBuffer); } if (deviceType == miniaudio.device_type.playback || deviceType == miniaudio.device_type.duplex) { _ma_device_process_pcm_frames_playback__webaudio(pDevice, bufferSize, pIntermediaryBuffer); for (var iChannel = 0; iChannel < e.outputBuffer.numberOfChannels; ++iChannel) { var outputBuffer = e.outputBuffer.getChannelData(iChannel); var intermediaryBuffer = device.intermediaryBufferView; for (var iFrame = 0; iFrame < bufferSize; iFrame += 1) { outputBuffer[iFrame] = intermediaryBuffer[iFrame*channels + iChannel]; } } } else { for (var iChannel = 0; iChannel < e.outputBuffer.numberOfChannels; ++iChannel) { e.outputBuffer.getChannelData(iChannel).fill(0.0); } } }; if (deviceType == miniaudio.device_type.capture || deviceType == miniaudio.device_type.duplex) { navigator.mediaDevices.getUserMedia({audio:true, video:false}) .then(function(stream) { device.streamNode = device.webaudio.createMediaStreamSource(stream); device.streamNode.connect(device.scriptNode); device.scriptNode.connect(device.webaudio.destination); }) .catch(function(error) { console.log("Failed to get user media: " + error); }); } if (deviceType == miniaudio.device_type.playback) { device.scriptNode.connect(device.webaudio.destination); } device.pDevice = pDevice; return miniaudio.track_device(device); },  
+ 50944: ($0) => { return miniaudio.get_device_by_index($0).webaudio.sampleRate; },  
+ 51010: ($0) => { var device = miniaudio.get_device_by_index($0); if (device.scriptNode !== undefined) { device.scriptNode.onaudioprocess = function(e) {}; device.scriptNode.disconnect(); device.scriptNode = undefined; } if (device.streamNode !== undefined) { device.streamNode.disconnect(); device.streamNode = undefined; } device.webaudio.close(); device.webaudio = undefined; device.pDevice = undefined; },  
+ 51403: ($0) => { miniaudio.untrack_device_by_index($0); },  
+ 51446: ($0) => { var device = miniaudio.get_device_by_index($0); device.webaudio.resume(); device.state = miniaudio.device_state.started; },  
+ 51571: ($0) => { var device = miniaudio.get_device_by_index($0); device.webaudio.suspend(); device.state = miniaudio.device_state.stopped; }
 };
 function GetWindowInnerWidth() { return window.innerWidth; }
 function GetWindowInnerHeight() { return window.innerHeight; }
@@ -3504,6 +3505,18 @@ function GetWindowInnerHeight() { return window.innerHeight; }
         return stream;
       },
   };
+  function ___syscall_chdir(path) {
+  try {
+  
+      path = SYSCALLS.getStr(path);
+      FS.chdir(path);
+      return 0;
+    } catch (e) {
+    if (typeof FS == 'undefined' || !(e.name === 'ErrnoError')) throw e;
+    return -e.errno;
+  }
+  }
+
   function ___syscall_faccessat(dirfd, path, amode, flags) {
   try {
   
@@ -8987,6 +9000,8 @@ var wasmImports = {
   /** @export */
   __assert_fail: ___assert_fail,
   /** @export */
+  __syscall_chdir: ___syscall_chdir,
+  /** @export */
   __syscall_faccessat: ___syscall_faccessat,
   /** @export */
   __syscall_fcntl64: ___syscall_fcntl64,
@@ -9580,11 +9595,12 @@ var dynCall_vidd = Module['dynCall_vidd'] = (a0, a1, a2, a3) => (dynCall_vidd = 
 var dynCall_ii = Module['dynCall_ii'] = (a0, a1) => (dynCall_ii = Module['dynCall_ii'] = wasmExports['dynCall_ii'])(a0, a1);
 var dynCall_iiii = Module['dynCall_iiii'] = (a0, a1, a2, a3) => (dynCall_iiii = Module['dynCall_iiii'] = wasmExports['dynCall_iiii'])(a0, a1, a2, a3);
 var dynCall_iii = Module['dynCall_iii'] = (a0, a1, a2) => (dynCall_iii = Module['dynCall_iii'] = wasmExports['dynCall_iii'])(a0, a1, a2);
+var dynCall_iiiiii = Module['dynCall_iiiiii'] = (a0, a1, a2, a3, a4, a5) => (dynCall_iiiiii = Module['dynCall_iiiiii'] = wasmExports['dynCall_iiiiii'])(a0, a1, a2, a3, a4, a5);
+var dynCall_vi = Module['dynCall_vi'] = (a0, a1) => (dynCall_vi = Module['dynCall_vi'] = wasmExports['dynCall_vi'])(a0, a1);
 var dynCall_iiiii = Module['dynCall_iiiii'] = (a0, a1, a2, a3, a4) => (dynCall_iiiii = Module['dynCall_iiiii'] = wasmExports['dynCall_iiiii'])(a0, a1, a2, a3, a4);
 var dynCall_iiiji = Module['dynCall_iiiji'] = (a0, a1, a2, a3, a4, a5) => (dynCall_iiiji = Module['dynCall_iiiji'] = wasmExports['dynCall_iiiji'])(a0, a1, a2, a3, a4, a5);
 var dynCall_iiiiiii = Module['dynCall_iiiiiii'] = (a0, a1, a2, a3, a4, a5, a6) => (dynCall_iiiiiii = Module['dynCall_iiiiiii'] = wasmExports['dynCall_iiiiiii'])(a0, a1, a2, a3, a4, a5, a6);
 var dynCall_jii = Module['dynCall_jii'] = (a0, a1, a2) => (dynCall_jii = Module['dynCall_jii'] = wasmExports['dynCall_jii'])(a0, a1, a2);
-var dynCall_vi = Module['dynCall_vi'] = (a0, a1) => (dynCall_vi = Module['dynCall_vi'] = wasmExports['dynCall_vi'])(a0, a1);
 var dynCall_vffff = Module['dynCall_vffff'] = (a0, a1, a2, a3, a4) => (dynCall_vffff = Module['dynCall_vffff'] = wasmExports['dynCall_vffff'])(a0, a1, a2, a3, a4);
 var dynCall_vf = Module['dynCall_vf'] = (a0, a1) => (dynCall_vf = Module['dynCall_vf'] = wasmExports['dynCall_vf'])(a0, a1);
 var dynCall_viiiiiiii = Module['dynCall_viiiiiiii'] = (a0, a1, a2, a3, a4, a5, a6, a7, a8) => (dynCall_viiiiiiii = Module['dynCall_viiiiiiii'] = wasmExports['dynCall_viiiiiiii'])(a0, a1, a2, a3, a4, a5, a6, a7, a8);
@@ -9604,8 +9620,8 @@ var _asyncify_start_unwind = (a0) => (_asyncify_start_unwind = wasmExports['asyn
 var _asyncify_stop_unwind = () => (_asyncify_stop_unwind = wasmExports['asyncify_stop_unwind'])();
 var _asyncify_start_rewind = (a0) => (_asyncify_start_rewind = wasmExports['asyncify_start_rewind'])(a0);
 var _asyncify_stop_rewind = () => (_asyncify_stop_rewind = wasmExports['asyncify_stop_rewind'])();
-var ___start_em_js = Module['___start_em_js'] = 42705;
-var ___stop_em_js = Module['___stop_em_js'] = 42778;
+var ___start_em_js = Module['___start_em_js'] = 51697;
+var ___stop_em_js = Module['___stop_em_js'] = 51770;
 
 // include: postamble.js
 // === Auto-generated postamble setup entry stuff ===
