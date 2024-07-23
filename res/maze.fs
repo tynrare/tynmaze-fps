@@ -32,15 +32,26 @@ void main()
     vec2 uv = fragTexCoord;
 		uv *= rev_tiles;
 
+		// discard uvs to zero
     if (top) {
-        uv.y -= rev_tiles.y; // discard to zero
+        uv.y -= rev_tiles.y; 
     } else if(bottom) {
         uv.x -= rev_tiles.x; // discard to zero
-        uv.y += rev_tiles.y * 2.0;
     } else if(side_b || side_a) {
         if (side_b) {
             uv.x -= rev_tiles.x; // discard to zero
         }
+    }
+
+		float pad = 0.1;
+		uv *= 1.0 - pad;
+		uv += rev_tiles * pad * 0.5;
+
+		// restore uvs to new texture positions
+    if (top) {
+    } else if(bottom) {
+        uv.y += rev_tiles.y * 2.0;
+    } else if(side_b || side_a) {
         uv.y += rev_tiles.y;
     }
 
