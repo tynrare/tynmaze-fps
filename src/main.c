@@ -1,6 +1,5 @@
 // @tynroar
 
-
 // --- system includes
 #include "main.h"
 #include <math.h>
@@ -42,26 +41,26 @@ float rlerp(float a, float b, float t) {
   return atan2f(SN, CS);
 }
 
-Vector2 Vec2Up = { 0.0, 1.0 };
-Vector2 Vec2Right = { 1.0, 0.0 };
+Vector2 Vec2Up = {0.0, 1.0};
+Vector2 Vec2Right = {1.0, 0.0};
 
 // ---
 
 void SaveProgress(const char *key, const int value) {
 #if defined(PLATFORM_WEB)
-    char script[256];
-    snprintf(script, sizeof(script), "saveProgress('%s', '%d');", key, value);
-    emscripten_run_script(script);
+  char script[256];
+  snprintf(script, sizeof(script), "saveProgress('%s', '%d');", key, value);
+  emscripten_run_script(script);
 #endif
 }
 
 const int LoadProgress(const char *key) {
 #if defined(PLATFORM_WEB)
-    char script[256];
-    snprintf(script, sizeof(script), "loadProgress('%s');", key);
-    return emscripten_run_script_int(script);
+  char script[256];
+  snprintf(script, sizeof(script), "loadProgress('%s');", key);
+  return emscripten_run_script_int(script);
 #else
-		return 0;
+  return 0;
 #endif
 }
 
@@ -88,6 +87,7 @@ Model model = {0};
 
 // --- res
 Texture pic_forwards = {0};
+Texture pic_punch = {0};
 Texture pic_rotate = {0};
 Texture pic_rotate_left = {0};
 Texture pic_rotate_right = {0};
@@ -95,24 +95,25 @@ Texture pic_rotate_right = {0};
 // ---
 
 typedef enum ACTIONS {
-	ACTION_NONE = 0,
-	ACTION_FORWARD,
-	ACTION_BACKWARD,
-	ACTION_LEFT,
-	ACTION_RIGHT,
-	ACTION_RUN,
-	ACTION_SWAP
+  ACTION_NONE = 0,
+  ACTION_FORWARD,
+  ACTION_BACKWARD,
+  ACTION_LEFT,
+  ACTION_RIGHT,
+  ACTION_RUN,
+  ACTION_SWAP,
+  ACTION_USE,
 } ACTION;
 
 typedef enum {
-    STORAGE_POSITION_SCORE = 0,
-    STORAGE_POSITION_POS_X,
-    STORAGE_POSITION_POS_Y
+  STORAGE_POSITION_SCORE = 0,
+  STORAGE_POSITION_POS_X,
+  STORAGE_POSITION_POS_Y
 } StorageData;
 
-Vector2 input_delta = { 0 };
-Vector2 input_pos = { 0 };
-Vector2 gesture_delta = { 0 };
+Vector2 input_delta = {0};
+Vector2 input_pos = {0};
+Vector2 gesture_delta = {0};
 
 static bool sui_btn_a_down = false;
 static bool sui_btn_b_down = false;
@@ -163,11 +164,19 @@ static void update() {
   camera.target.y = camera.position.y;
   camera.target.z = camera.position.z + cosf(cameraRot);
 
-	SaveProgress("steps", steps);
-	SaveProgress("px", playerPosition.x);
-	SaveProgress("py", playerPosition.y);
-	SaveProgress("turn", playerTurn * 1e4);
-	SaveProgress("hash", SAVES_HASH);
+  SaveProgress("steps", steps);
+  SaveProgress("px", playerPosition.x);
+  SaveProgress("py", playerPosition.y);
+  SaveProgress("turn", playerTurn * 1e4);
+  SaveProgress("hash", SAVES_HASH);
+
+  if (action_b == ACTION_SWAP) {
+    swap_weapon();
+  } else if (action_b == ACTION_USE) {
+    use_weapon();
+  }
+
+  update_weapon();
 }
 
 #define SUI_BTN_A                                                              \
@@ -190,41 +199,37 @@ static void draw_inputs() {
   DrawRectangleLinesEx(sbb, 4, sbb_color);
   DrawRectangleLinesEx(sbc, 4, sbc_color);
 
-  DrawTexturePro(pic_rotate_left,
-                 (Rectangle){0, 0, pic_forwards.width, pic_forwards.height},
-                 sba, Vector2Zero(), 0.0, sba_color);
+  DrawTexturePro(pic_rotate,
+                 (Rectangle){0, 0, pic_rotate.width, pic_rotate.height}, sba,
+                 Vector2Zero(), 0.0, sba_color);
 
-  DrawText("A", sba.x + sba.width - 8 + 2, sba.y + sba.height - 16 + 2, 20,
+  DrawText("R", sba.x + sba.width - 8 + 2, sba.y + sba.height - 16 + 2, 20,
            BLACK);
-  DrawText("A", sba.x + sba.width - 8, sba.y + sba.height - 16, 20,
-           sba_color);
+  DrawText("R", sba.x + sba.width - 8, sba.y + sba.height - 16, 20, sba_color);
 
-  DrawTexturePro(pic_rotate_right,
-                 (Rectangle){0, 0, pic_forwards.width, pic_forwards.height},
-                 sbb, Vector2Zero(), 0.0, sbb_color);
+  DrawTexturePro(pic_punch,
+                 (Rectangle){0, 0, pic_punch.width, pic_punch.height}, sbb,
+                 Vector2Zero(), 0.0, sbb_color);
 
-  DrawText("D", sbb.x + sbb.width - 8 + 2, sbb.y + sbb.height - 16 + 2, 20,
+  DrawText("F", sbb.x + sbb.width - 8 + 2, sbb.y + sbb.height - 16 + 2, 20,
            BLACK);
-  DrawText("D", sbb.x + sbb.width - 8, sbb.y + sbb.height - 16, 20,
-           sbb_color);
+  DrawText("F", sbb.x + sbb.width - 8, sbb.y + sbb.height - 16, 20, sbb_color);
 
   DrawTexturePro(pic_forwards,
                  (Rectangle){0, 0, pic_forwards.width, pic_forwards.height},
                  sbc, Vector2Zero(), 0.0, sbc_color);
 
-  DrawText("SHIFT", sbc.x + sbc.width - 8 + 2, sbc.y + sbc.height - 16 + 2, 20,
-           BLACK);
-  DrawText("SHIFT", sbc.x + sbc.width - 8, sbc.y + sbc.height - 16, 20,
-           sbc_color);
+  DrawText("SHIFT", sbc.x - 32 + 2, sbc.y + sbc.height - 16 + 2, 20, BLACK);
+  DrawText("SHIFT", sbc.x - 32, sbc.y + sbc.height - 16, 20, sbc_color);
 }
 
 static void draw() {
   ClearBackground(BLACK);
 
   BeginMode3D(camera);
-    DrawModel(model, mapPosition, 1.0f, WHITE); // Draw maze map
+  DrawModel(model, mapPosition, 1.0f, WHITE); // Draw maze map
   EndMode3D();
-	draw_weapon();
+  draw_weapon();
 
   DrawText(TextFormat("Steps: %i", steps), 16 + 2, 16 + 2, 20, BLACK);
   DrawText(TextFormat("Steps: %i", steps), 16, 16, 20, WHITE);
@@ -233,10 +238,10 @@ static void draw() {
 }
 
 static void inputs_sui_buttons() {
-	bool a_past_down = sui_btn_a_down;
-	bool b_past_down = sui_btn_b_down;
-	bool c_past_down = sui_btn_c_down;
-	bool screen_past_down = sui_screen_down;
+  bool a_past_down = sui_btn_a_down;
+  bool b_past_down = sui_btn_b_down;
+  bool c_past_down = sui_btn_c_down;
+  bool screen_past_down = sui_screen_down;
   sui_btn_a_down = false;
   sui_btn_b_down = false;
   sui_btn_c_down = false;
@@ -262,21 +267,21 @@ static void inputs_sui_buttons() {
     sui_btn_c_down = sui_btn_c_down || collide_c;
     if (!sui_screen_down && !(collide_a || collide_b || collide_c)) {
       sui_screen_down = true;
-			if (screen_past_down) {
-				input_delta = Vector2Subtract(input_pos, tp.pos);
-			} else {
-				input_delta.x = 0;
-				input_delta.y = 0;
-			}
-			input_pos = tp.pos;
+      if (screen_past_down) {
+        input_delta = Vector2Subtract(input_pos, tp.pos);
+      } else {
+        input_delta.x = 0;
+        input_delta.y = 0;
+      }
+      input_pos = tp.pos;
     }
   }
 
-	sui_btn_a_pressed = sui_btn_a_down && !a_past_down;
-	sui_btn_b_pressed = sui_btn_b_down && !b_past_down;
-	sui_btn_c_pressed = sui_btn_c_down && !c_past_down;
-	sui_screen_pressed = sui_screen_down && !screen_past_down;
-	sui_screen_released = !sui_screen_down && screen_past_down;
+  sui_btn_a_pressed = sui_btn_a_down && !a_past_down;
+  sui_btn_b_pressed = sui_btn_b_down && !b_past_down;
+  sui_btn_c_pressed = sui_btn_c_down && !c_past_down;
+  sui_screen_pressed = sui_screen_down && !screen_past_down;
+  sui_screen_released = !sui_screen_down && screen_past_down;
 }
 
 static void inputs() {
@@ -302,46 +307,46 @@ static void inputs() {
   bool mode_mouse = !tCount;
 
   sui_screen_released = sui_screen_released || IsKeyPressed(KEY_SPACE) ||
-                       IsKeyPressed(KEY_W) ||
-                       (mode_mouse && IsMouseButtonPressed(MOUSE_BUTTON_LEFT));
-  sui_btn_a_pressed = sui_btn_a_pressed || IsKeyPressed(KEY_A);
-  sui_btn_b_pressed = sui_btn_b_pressed || IsKeyPressed(KEY_D);
+                        IsKeyPressed(KEY_W) ||
+                        (mode_mouse && IsMouseButtonPressed(MOUSE_BUTTON_LEFT));
+  sui_btn_a_pressed = sui_btn_a_pressed || IsKeyPressed(KEY_R);
+  sui_btn_b_pressed = sui_btn_b_pressed || IsKeyPressed(KEY_F);
   sui_btn_c_down = sui_btn_c_down || IsKeyDown(KEY_LEFT_SHIFT);
 
   inputDirection.x = 0.0f;
   inputDirection.y = 0.0f;
 
-	action_a = ACTION_NONE;
-	action_b = ACTION_NONE;
+  action_a = ACTION_NONE;
+  action_b = ACTION_NONE;
 
-	bool gesture_registered = Vector2Length(gesture_delta) > 64;
-	if (gesture_registered && sui_screen_released) {
-		Vector2 dir = Vector2Normalize(gesture_delta);
-		float dot_up = Vector2DotProduct(dir, Vec2Up);
-		float dot_right = Vector2DotProduct(dir, Vec2Right);
-		if (fabs(dot_up) < 0.5) {
-			if (dot_right < 0) {
-				action_a = ACTION_RIGHT;
-			} else {
-				action_a = ACTION_LEFT;
-			}
-		} else if (dot_up > 0) {
-			action_a = ACTION_FORWARD;
-			action_b = ACTION_RUN;
-		} else {
-			action_a = ACTION_BACKWARD;
-		}
-	} else {
-		if (sui_screen_released) {
-			action_a = ACTION_FORWARD;
-		} else if (sui_btn_a_pressed) {
-			action_a = ACTION_LEFT;
-		} else if (sui_btn_b_pressed) {
-			action_a = ACTION_RIGHT;
-		} else if (IsKeyPressed(KEY_S)) {
-			action_a = ACTION_BACKWARD;
-		}
-	}
+  bool gesture_registered = Vector2Length(gesture_delta) > 64;
+  if (gesture_registered && sui_screen_released) {
+    Vector2 dir = Vector2Normalize(gesture_delta);
+    float dot_up = Vector2DotProduct(dir, Vec2Up);
+    float dot_right = Vector2DotProduct(dir, Vec2Right);
+    if (fabs(dot_up) < 0.5) {
+      if (dot_right < 0) {
+        action_a = ACTION_RIGHT;
+      } else {
+        action_a = ACTION_LEFT;
+      }
+    } else if (dot_up > 0) {
+      action_a = ACTION_FORWARD;
+      action_b = ACTION_RUN;
+    } else {
+      action_a = ACTION_BACKWARD;
+    }
+  } else {
+    if (sui_screen_released) {
+      action_a = ACTION_FORWARD;
+    } else if (IsKeyPressed(KEY_A)) {
+      action_a = ACTION_LEFT;
+    } else if (IsKeyPressed(KEY_D)) {
+      action_a = ACTION_RIGHT;
+    } else if (IsKeyPressed(KEY_S)) {
+      action_a = ACTION_BACKWARD;
+    }
+  }
 
   if (action_a == ACTION_FORWARD) {
     inputDirection.x = 1.0f;
@@ -353,21 +358,21 @@ static void inputs() {
     inputDirection.y = -1.0f;
   }
 
-	if (IsKeyPressed(KEY_R)) {
-		swap_weapon();
-	}
+  if (sui_btn_a_pressed) {
+    action_b = ACTION_SWAP;
+  } else if (sui_btn_b_pressed) {
+    action_b = ACTION_USE;
+  } else if (sui_btn_c_down) {
+    action_b = ACTION_RUN;
+  }
 
-	if (sui_btn_c_down) {
-		action_b = ACTION_RUN;
-	}
-
-	if (sui_screen_released) {
-		gesture_delta.x = 0;
-		gesture_delta.y = 0;
-	} else if (sui_screen_down) {
-		gesture_delta.x += input_delta.x;
-		gesture_delta.y += input_delta.y;
-	}
+  if (sui_screen_released) {
+    gesture_delta.x = 0;
+    gesture_delta.y = 0;
+  } else if (sui_screen_down) {
+    gesture_delta.x += input_delta.x;
+    gesture_delta.y += input_delta.y;
+  }
 }
 
 // --- flow
@@ -376,6 +381,7 @@ static void dispose() {
   UnloadShader(shader_maze);
   UnloadTexture(tex_noise0);
   UnloadTexture(pic_forwards);
+  UnloadTexture(pic_punch);
   UnloadTexture(pic_rotate);
   UnloadTexture(pic_rotate_left);
   UnloadTexture(pic_rotate_right);
@@ -384,29 +390,30 @@ static void dispose() {
   UnloadTexture(cubicmap); // Unload cubicmap texture
   UnloadTexture(texture);  // Unload map texture
   UnloadModel(model);      // Unload map model
-	CloseAudioDevice();
+  CloseAudioDevice();
 }
 
 static void init() {
   dispose();
 
-	int saves_hash = LoadProgress("hash");
-	if (saves_hash == SAVES_HASH) {
-		steps = LoadProgress("steps");
-		playerPosition.x = LoadProgress("px");
-		playerPosition.y = LoadProgress("py");
-		playerPosition.x = playerPosition.x ? playerPosition.x : 1;
-		playerPosition.y = playerPosition.y ? playerPosition.y : 1;
-		playerTurn = LoadProgress("turn") / 1e4;
-	}
+  int saves_hash = LoadProgress("hash");
+  if (saves_hash == SAVES_HASH) {
+    steps = LoadProgress("steps");
+    playerPosition.x = LoadProgress("px");
+    playerPosition.y = LoadProgress("py");
+    playerPosition.x = playerPosition.x ? playerPosition.x : 1;
+    playerPosition.y = playerPosition.y ? playerPosition.y : 1;
+    playerTurn = LoadProgress("turn") / 1e4;
+  }
 
-	init_weapon();
+  init_weapon();
 
-	InitAudioDevice();
+  InitAudioDevice();
 
   shader_maze = LoadShader(RES_PATH "maze.vs", RES_PATH "maze.fs");
 
   pic_forwards = LoadTexture(RES_PATH "pic/forwards.png");
+  pic_punch = LoadTexture(RES_PATH "pic/punch-blast.png");
   pic_rotate = LoadTexture(RES_PATH "pic/rotate.png");
   pic_rotate_left = LoadTexture(RES_PATH "pic/rotate_left.png");
   pic_rotate_right = LoadTexture(RES_PATH "pic/rotate_right.png");
@@ -432,17 +439,20 @@ static void init() {
   model.materials[0].shader = shader_maze;
 
   tex_noise0 = LoadTexture(RES_PATH "tex_noise0.png");
-  // somewhy does not work with direct SetShaderValueTexture. Assignin location to some of reserver channels
-  model.materials[0].shader.locs[SHADER_LOC_MAP_HEIGHT] = GetShaderLocation(shader_maze, "tex_noise0");
+  // somewhy does not work with direct SetShaderValueTexture. Assignin location
+  // to some of reserver channels
+  model.materials[0].shader.locs[SHADER_LOC_MAP_HEIGHT] =
+      GetShaderLocation(shader_maze, "tex_noise0");
   model.materials[0].maps[MATERIAL_MAP_HEIGHT].texture = tex_noise0;
-  //int noise_location = GetShaderLocation(model.materials[0].shader, "tex_noise0");
-  //SetShaderValueTexture(model.materials[0].shader, noise_location, tex_noise0);
+  // int noise_location = GetShaderLocation(model.materials[0].shader,
+  // "tex_noise0"); SetShaderValueTexture(model.materials[0].shader,
+  // noise_location, tex_noise0);
 
   // Get map image data to be used for collision detection
   mapPixels = LoadImageColors(imMap);
   UnloadImage(imMap); // Unload image from RAM
 
-	// --- load
+  // --- load
 }
 
 // --- system

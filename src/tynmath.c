@@ -1,5 +1,9 @@
 #include "tynmath.h"
 
+float dlerp(float a, float b, float decay, float dt) {
+	return b + (a - b) * expf(-decay * dt);
+}
+
 Vector3 Vector3RotateByMatrix(Vector3 v, Matrix m) {
 	v = Vector3Transform(v, m);
 
