@@ -433,6 +433,7 @@ static void init() {
 
   // NOTE: By default each cube is mapped to one part of texture atlas
   texture = LoadTexture(RES_PATH "atlas_maze.png"); // Load map texture
+	SetTextureFilter(texture, TEXTURE_FILTER_POINT);
   model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture =
       texture; // Set map diffuse texture
 
