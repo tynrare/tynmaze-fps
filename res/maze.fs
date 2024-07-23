@@ -21,23 +21,27 @@ float rand(vec3 co) {
 
 void main()
 {
+		vec2 tiles = vec2(22.0, 3.0);
+		vec2 rev_tiles = 1.0 / tiles;
+	
     bool top = fragNormal.y < 0.0;
     bool bottom = fragNormal.y > 0.0;
     bool side_a = fragNormal.x > 0.0 || fragNormal.z > 0.0;
     bool side_b = fragNormal.x < 0.0 || fragNormal.z < 0.0;
 
     vec2 uv = fragTexCoord;
-    uv *= 0.25;
+		uv *= rev_tiles;
+
     if (top) {
-        uv.y -= 0.25; // discard to zero
+        uv.y -= rev_tiles.y; // discard to zero
     } else if(bottom) {
-        uv -= 0.25; // discard to zero
-        uv.y += 0.5;
+        uv.x -= rev_tiles.x; // discard to zero
+        uv.y += rev_tiles.y * 2.0;
     } else if(side_b || side_a) {
         if (side_b) {
-            uv.x -= 0.25; // discard to zero
+            uv.x -= rev_tiles.x; // discard to zero
         }
-        uv.y += 0.25;
+        uv.y += rev_tiles.y;
     }
 
     float gridscale = 1.0;
@@ -51,9 +55,9 @@ void main()
     vec4 randomValues = texture2D(tex_noise0, ruv);
     float randomValue = randomValues.x;
 
-    uv.x += ceil(randomValue * 4.0) * 0.25;
+    uv.x += ceil(randomValue * tiles.x) * rev_tiles.x;
 
-    vec4 color = texture2D(texture0, uv);
+    vec4 color = texture2D(texture0, fract(uv));
 
     gl_FragColor = vec4(color.rgb, 1.0);
 }

@@ -2,8 +2,7 @@
 
 
 // --- system includes
-#include "dust.h"
-#include "root.h"
+#include "main.h"
 #include <math.h>
 #include <raylib.h>
 #include <raymath.h>
@@ -23,13 +22,10 @@
 
 bool active = false;
 
-static const int VIEWPORT_W = 0x320;
-static const int VIEWPORT_H = 0x1c2;
-
 TouchPoint touch_points[MAX_TOUCH_POINTS] = {0};
 
-static int viewport_w = VIEWPORT_W;
-static int viewport_h = VIEWPORT_H;
+int viewport_w = VIEWPORT_W;
+int viewport_h = VIEWPORT_H;
 
 static const int SAVES_HASH = 0xaa;
 

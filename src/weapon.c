@@ -3,6 +3,7 @@
 #include <raylib.h>
 #include "tynmath.h"
 #include <math.h>
+#include "main.h"
 
 static Model model = {0};
 static Model model_gun = {0};
@@ -35,8 +36,8 @@ void init_weapon() {
   model_gun = LoadModel(RES_PATH "models/gun.glb");
   model_sword = LoadModel(RES_PATH "models/sword.glb");
 
-	float roty = 0.2;
-  camera.position = (Vector3){1.0f + roty, 0.8f, 2.0f}; // Camera position
+	float roty = 0.4;
+  camera.position = (Vector3){1.0f, 0.8f, 2.0f}; // Camera position
   camera.target = (Vector3){0.0f - roty, 0.4f, -2.0f};   // Camera looking at point
   camera.up = (Vector3){0.0f, 1.0f,
                         -0.0f}; // Camera up vector (rotation towards target)
@@ -51,6 +52,7 @@ void swap_weapon() {
 }
 
 void draw_weapon() {
+	camera.position.x = (float)(viewport_w) / 800.0f * 1.6f;
   BeginMode3D(camera);
 	float rot = 0.0;
 	switch (weapon_type) {
