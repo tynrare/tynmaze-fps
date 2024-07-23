@@ -43,7 +43,7 @@ void main()
         }
     }
 
-		float pad = 0.1;
+		float pad = 0.0;
 		uv *= 1.0 - pad;
 		uv += rev_tiles * pad * 0.5;
 
