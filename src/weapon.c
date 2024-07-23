@@ -52,7 +52,7 @@ void swap_weapon() {
 }
 
 void draw_weapon() {
-	camera.position.x = (float)(viewport_w) / 800.0f * 1.6f;
+	camera.position.x = fminf(1.5f, (float)(viewport_w) / 800.0f * 1.6f);
   BeginMode3D(camera);
 	float rot = 0.0;
 	switch (weapon_type) {
