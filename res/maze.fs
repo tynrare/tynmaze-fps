@@ -21,7 +21,7 @@ float rand(vec3 co) {
 
 void main()
 {
-		vec2 tiles = vec2(22.0, 3.0);
+		vec2 tiles = vec2(4.0, 3.0);
 		vec2 rev_tiles = 1.0 / tiles;
 	
     bool top = fragNormal.y < 0.0;
@@ -56,7 +56,7 @@ void main()
     }
 
     float gridscale = 1.0;
-    vec3 fp = vec3(fragPosition.x + 0.5, fragPosition.y, fragPosition.z + 0.5) * gridscale;
+    vec3 fp = vec3(fragPosition.x + 0.501, fragPosition.y + 0.01, fragPosition.z + 0.501) * gridscale;
     vec3 fp_ceil = ceil(fp) / gridscale;
 
     // completely random texture
