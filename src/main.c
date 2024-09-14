@@ -186,6 +186,21 @@ static void update() {
 #define SUI_BTN_C                                                              \
   (Rectangle) { viewport_w - 16 - 64, viewport_h - 16 - 64, 64, 64 }
 
+static int boss_hearts = 1;
+static int boss_hurts = 0;
+static const char *boss_name = "minotaurus";
+
+static void draw_boss_ui() {
+  DrawRectangle(16 - 2, 16 - 2, viewport_w - 16 - 16 + 4, 32 + 4, WHITE);
+  DrawRectangle(16, 16, viewport_w - 16 - 16, 32, RED);
+  DrawText(TextFormat("%d/%d", boss_hearts - boss_hurts, boss_hearts), viewport_w * 0.5 - 26, 14, 40, WHITE);
+  DrawText(TextFormat("%s", boss_name), viewport_w * 0.5 - 110, 14 + 32 + 1, 40, WHITE);
+}
+
+static void hurt_boss() {
+  boss_hurts += 1;
+}
+
 static void draw_inputs() {
   Rectangle sba = SUI_BTN_A;
   Rectangle sbb = SUI_BTN_B;
@@ -235,6 +250,7 @@ static void draw() {
   DrawText(TextFormat("Steps: %i", steps), 16, 16, 20, WHITE);
 
   draw_inputs();
+  draw_boss_ui();
 }
 
 static void inputs_sui_buttons() {
