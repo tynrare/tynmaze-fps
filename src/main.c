@@ -350,9 +350,9 @@ static void inputs() {
     float dot_right = Vector2DotProduct(dir, Vec2Right);
     if (fabs(dot_up) < 0.5) {
       if (dot_right < 0) {
-        action_a = ACTION_RIGHT;
-      } else {
         action_a = ACTION_LEFT;
+      } else {
+        action_a = ACTION_RIGHT;
       }
     } else if (dot_up > 0) {
       action_a = ACTION_FORWARD;
